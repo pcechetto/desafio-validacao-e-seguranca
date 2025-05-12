@@ -2,7 +2,6 @@ package com.devsuperior.bds04.dto;
 
 import com.devsuperior.bds04.entities.User;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,10 +9,6 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class UserDTO {
     private Long id;
-
-    @NotBlank(message = "First name is required")
-    private String firstName;
-    private String lastName;
 
     @Email(message = "Email is invalid")
     private String email;
@@ -25,18 +20,14 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String firstName, String lastName, String email, String password) {
+    public UserDTO(Long id, String email, String password) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
 
     public UserDTO(User entity) {
         id = entity.getId();
-        firstName = entity.getFirstName();
-        lastName = entity.getLastName();
         email = entity.getEmail();
         password = entity.getPassword();
         entity.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
@@ -48,22 +39,6 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
