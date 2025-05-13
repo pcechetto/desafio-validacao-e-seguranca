@@ -2,19 +2,20 @@ package com.devsuperior.bds04.dto;
 
 import com.devsuperior.bds04.entities.Event;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+@SuppressWarnings("unused")
 public class EventDTO {
 
 
     private Long id;
 
-    @NotEmpty(message = "Campo requerido")
+    @NotBlank(message = "Campo requerido")
     private String name;
-    @Future(message = "A data do evento não pode ser passada ")
+    @Future(message = "A data do evento não pode ser passada")
     private LocalDate date;
     private String url;
     @NotNull(message = "Campo requerido")

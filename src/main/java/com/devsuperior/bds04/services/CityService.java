@@ -24,8 +24,8 @@ public class CityService {
 
     @Transactional(readOnly = true)
     public Page<CityDTO> findAll(Pageable pageable) {
-        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name"));
-        return cityRepository.findAll(pageRequest).map(CityDTO::new);
+        Pageable pageableSortedByName = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name"));
+        return cityRepository.findAll(pageableSortedByName).map(CityDTO::new);
     }
 
     @Transactional

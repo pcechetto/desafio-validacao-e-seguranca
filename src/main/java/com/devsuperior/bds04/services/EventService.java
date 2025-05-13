@@ -7,8 +7,10 @@ import com.devsuperior.bds04.repositories.CityRepository;
 import com.devsuperior.bds04.repositories.EventRepository;
 import com.devsuperior.bds04.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EventService {
@@ -19,6 +21,20 @@ public class EventService {
     public EventService(EventRepository eventRepository, CityRepository cityRepository) {
         this.eventRepository = eventRepository;
         this.cityRepository = cityRepository;
+    }
+
+    public Page<EventDTO> findAll(Pageable pageable) {
+        return eventRepository.findAll(pageable).map(EventDTO::new);
+    }
+
+    @Transactional
+    public EventDTO insert(EventDTO dto) {
+        return new EventDTO(eventRepository.save(new Event(
+                dto.getId(),
+                dto.getName(),
+                dto.getDate(),
+                dto.getUrl(),
+                cityRepository.getReferenceById(dto.getCityId()))));
     }
 
     @Transactional
